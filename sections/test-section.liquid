@@ -1,0 +1,234 @@
+{{ 'text-section.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  {% if section.settings.background_image != blank %}
+    .test-section {
+      background-image: url({{ section.settings.background_image | img_url: 'master' }});
+      background-position: center;
+      position: relative;
+    }
+  {% endif %}
+
+  {% if section.settings.background_shadow != blank %}
+    .test-section:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url({{ section.settings.background_shadow | img_url: 'master' }});
+      background-repeat: no-repeat;
+      background-position: bottom right;
+      z-index: 0;
+    }
+  {% endif %}
+{% endstyle %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<div class="test-section">
+  <div class="container">
+    <div class="test-section__main">
+      <div class="image-text__main image-direction__{{ section.settings.direction }}">
+        <div class="image-text__content">
+          {% if section.settings.title != blank %}
+            <h1 class="image-text__title">{{ section.settings.title }}</h1>
+          {% endif %}
+          {% if section.settings.content != blank %}
+            <span class="image-text__cntnt">{{ section.settings.content }}</span>
+          {% endif %}
+          {% if section.settings.url != blank %}
+            <a class="image-text__button" href="{{ section.settings.url }}">
+              {{ section.settings.button }}
+            </a>
+          {% else %}
+            {% if section.settings.button != blank %}
+              <button class="image-text__button">{{ section.settings.button }}</button>
+            {% endif %}
+          {% endif %}
+          {% if section.settings.text != blank %}
+            <span class="image-text__text">{{ section.settings.text }}</span>
+          {% endif %}
+        </div>
+        {% if section.settings.image != blank %}
+          <div class="image-text__image">
+            <img src="{{ section.settings.image | img_url:'master' }}" width="" height="">
+          </div>
+        {% endif %}
+      </div>
+      {% if section.blocks.size > 0 %}
+        <div class="testimonial-slider__main">
+          <div class="testimonial-slider__content swiper testimonial-swiper">
+            <div class="swiper-wrapper">
+              {% for block in section.blocks %}
+                <div class="swiper-slide">
+                  <div class="testimonial-slider__content-main">
+                    {% if block.settings.review != blank %}
+                      <div class="testimonial-slider__review">
+                        <span>{{ block.settings.review }}</span>
+                      </div>
+                    {% endif %}
+                    <div class="testimonial-slider__info">
+                      {% if block.settings.star != blank %}
+                        <span class="testimonial-slider__star testimonial-slider__icon">
+                          <img src="{{ block.settings.star | img_url:'master' }}" width="" height="">
+                        </span>
+                      {% endif %}
+                      {% if block.settings.author != blank %}
+                        <span class="testimonial-slider__author testimonial-slider__icon">
+                          {{ block.settings.author }}
+                        </span>
+                      {% endif %}
+                      {% if block.settings.date != blank %}
+                        <span class="testimonial-slider__date testimonial-slider__icon">
+                          {{ block.settings.date }}
+                        </span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="swiper-button-next">
+              <img src="https://cdn.shopify.com/s/files/1/0695/5492/9908/files/Slider_Arrow.svg?v=1770034074">
+            </div>
+            <div class="swiper-button-prev">
+              <img src="https://cdn.shopify.com/s/files/1/0695/5492/9908/files/Slider_Arrow.svg?v=1770034074">
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  const swiper = new Swiper('.testimonial-swiper', {
+    direction: 'horizontal',
+    slidesPerView: 1,
+    slidesPerScroll: 1,
+    loop: false,
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Text Section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_shadow",
+        "label": "Background Shadow"
+      },
+      {
+        "type": "header",
+        "content": "Image Text Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "direction",
+        "label": "Image Direction",
+        "default": "default",
+        "options": [
+          {
+            "label": "Default",
+            "value": "default"
+          },
+          {
+            "label": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Lorem ipsum dolor sit amet"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "content",
+        "label": "Content",
+        "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut."
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": "Button",
+        "default": "Shop Now"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "URL"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "Over 100,000+ Happy customers"
+      },
+      {
+        "type": "header",
+        "content": "Tesimonial Slider please use blocks"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "inline_richtext",
+            "id": "review",
+            "label": "Review",
+            "default": "“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor”"
+          },
+          {
+            "type": "image_picker",
+            "id": "star",
+            "label": "Star Ratings"
+          },
+          {
+            "type": "text",
+            "id": "author",
+            "label": "Author",
+            "default": "Lorem ipsum"
+          },
+          {
+            "type": "text",
+            "id": "date",
+            "label": "Date",
+            "default": "22/09/1996"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Text Section"
+      }
+    ]
+  }
+{% endschema %}
