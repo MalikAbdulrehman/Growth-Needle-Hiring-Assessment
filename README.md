@@ -13,3 +13,6 @@ The goal of this assessment is to demonstrate my skills in [Shopify Frontend Dev
 - Clean and reusable code structure
 - Performance-optimized implementation
 - Matches the provided design/specifications.
+
+Desktop View => https://imagelink.click/EuDcse.png
+Mobile View => https://imagelink.click/ZZkBLs.png
