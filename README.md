@@ -2,7 +2,7 @@
 
 ## 📌 Project Overview
 This project is a test assessment created as part of the hiring process.  
-The goal of this assessment is to demonstrate my skills in [Shopify Frontend Development].
+The goal of this assessment is to demonstrate my skills in Shopify Frontend Development.
 
 ## 🛠 Tech Stack
 - HTML / CSS / JavaScript
